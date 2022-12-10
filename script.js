@@ -5,6 +5,8 @@ const mobMenu = document.querySelector(".mobile-menu")
 const cartIcon = document.querySelector(".cartIcon")
 const cartMenu = document.querySelector(".product-detail")
 const cardsContainer = document.querySelector(".cards-container")
+const productDetailConteiner = document.querySelector(".product-detail2")
+const productDetailClose = document.querySelector(".product-detail2-close")
 const productList = []
 
 // seccion de menus
@@ -23,6 +25,7 @@ function toggleMobMenu() {
     if (isCartOpen) {
         cartMenu.classList.add("inactive")
     }
+    closeDetails()
     mobMenu.classList.toggle("inactive")
 }
 
@@ -30,15 +33,29 @@ cartIcon.addEventListener("click", togglecartMenu)
 function togglecartMenu() {
     const isMobOpen = !mobMenu.classList.contains("inactive")
     const isDeskMenuOpen = !deskMenu.classList.contains("inactive")
+    const isProductDetailOpen = !productDetailConteiner.classList.contains("inactive")
+    
     if (isMobOpen) {
         mobMenu.classList.add("inactive")
     }
     if (isDeskMenuOpen) {
         deskMenu.classList.add("inactive")
     }
+    if (isProductDetailOpen) {
+        productDetailConteiner.classList.add("inactive")
+    }
     cartMenu.classList.toggle("inactive")
 }
-
+function openProductDetail() {
+    const isCartOpen = !cartMenu.classList.contains("inactive")
+    if (isCartOpen) {
+        cartMenu.classList.add("inactive")
+    }
+    productDetailConteiner.classList.remove("inactive")
+}
+function closeDetails() {
+    productDetailConteiner.classList.add("inactive")
+}
 
 //adiccion de productos
 
@@ -76,6 +93,8 @@ function renderProducts(arr) {
     //adicion de clases y elementos
     productCard.classList.add("product-card")
     img.setAttribute("src", product.image)
+    img.addEventListener("click", openProductDetail)
+    productDetailClose.addEventListener("click", closeDetails)
     productInfo.classList.add("product-info")
     productPrice.innerText = "$" + product.price
     productName.innerText = product.name
